@@ -6,6 +6,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Bus\QueryBus;
@@ -55,11 +56,25 @@ class UserController extends AbstractController
     }
     
     /**
-     * @Route("/users/create", name="app_user_create")
+     * @Route("/users/create", methods={"POST"}, name="app_user_create")
      */
     public function create(Request $request): JsonResponse
     {
-        //$this->commandBus->handle(new CreateUserCommand());
+        $parameters = json_decode($request->getContent(), true);
+        
+        $fields = ['userName', 'email', 'companyName', 'vatId'];
+        foreach($fields as $field) {
+            if(!isset($parameters[$field])) {
+                throw new \Exception(sprintf('Missing field %s', $field));
+            }
+        }
+
+        $this->commandBus->handle(new CreateUserCommand(
+            $parameters['userName'],
+            $parameters['email'],
+            $parameters['companyName'],
+            $parameters['vatId'],
+        ));
 
         return new JsonResponse([]);
     }

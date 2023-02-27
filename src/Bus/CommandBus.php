@@ -26,7 +26,7 @@ final class CommandBus
         return str_replace('CommandHandler', 'Command', $handler);
     }
 
-    public function getCommandHandler(string $command): object
+    public function getCommandHandler(string $command): string
     {
         if(isset($this->handlers[$command])) {
             return $this->handlers[$command];
@@ -38,6 +38,6 @@ final class CommandBus
     public function handle(CommandInterface $command) {
         $handlerClass = $this->getCommandHandler(get_class($command));
         $service = $this->container->get($handlerClass);
-        return $service($query);
+        return $service($command);
     }
 }
