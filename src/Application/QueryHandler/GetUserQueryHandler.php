@@ -18,14 +18,11 @@ final class GetUserQueryHandler implements QueryHandlerInterface
 
     public function __invoke(GetUserQuery $query) {
         $userId = $query->getUserId();
-        dump('in handler');
         $user = $this->entityManager->getRepository(User::class)->find($userId);
         if(!$user) {
             throw new \Exception('User not found');
         }
 
-        dump('in handler');
-
-        // user data
+        return $user;
     }
 }

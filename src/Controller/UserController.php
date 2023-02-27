@@ -11,6 +11,8 @@ use App\Entity\User;
 use App\Bus\QueryBus;
 use App\Bus\CommandBus;
 use App\Application\Query\GetUserQuery;
+use App\Application\Command\ActivateUserCommand;
+use App\Application\Command\DeactivateUserCommand;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
@@ -34,6 +36,8 @@ class UserController extends AbstractController
      */
     public function activate(int $userId): JsonResponse
     {
+        $this->commandBus->handle(new ActivateUserCommand($userId));
+
         return new JsonResponse([]);
     }
 
@@ -42,6 +46,8 @@ class UserController extends AbstractController
      */
     public function deactivate(int $userId): JsonResponse
     {
+        $this->commandBus->handle(new DeactivateUserCommand($userId));
+
         return new JsonResponse([]);
     }
     
@@ -58,9 +64,9 @@ class UserController extends AbstractController
      */
     public function get(int $userId): JsonResponse
     {
-        $this->queryBus->handle(new GetUserQuery($userId));
+        $user = $this->queryBus->handle(new GetUserQuery($userId));
 
-        return new JsonResponse([]);
+        return new JsonResponse(json_encode($user));
     }
 
     /**
