@@ -19,24 +19,23 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
 
     _instanceof:
         App\Application\CommandHandler\CommandHandlerInterface:
-            #autowire: true
+            autowire: true
             tags: ['app.bus.command_handler']
         App\Application\QueryHandler\QueryHandlerInterface:
-            #autowire: true
+            autowire: true
             tags: ['app.bus.query_handler']
         
 
     'App\Bus\CommandBus':
         arguments:
-            - !tagged 'app.bus.command_handler'
+            - $handlers: !tagged 'app.bus.command_handler'
 
     'App\Bus\QueryBus':
         arguments:
-            - !tagged 'app.bus.query_handler'
-        
-
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+            - $handlers: !tagged 'app.bus.query_handler'

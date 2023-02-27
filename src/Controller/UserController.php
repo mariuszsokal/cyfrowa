@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Bus\QueryBus;
 use App\Bus\CommandBus;
+use App\Application\Query\GetUserQuery;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController

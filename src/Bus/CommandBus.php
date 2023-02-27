@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Application\Bus;
+namespace App\Bus;
 
 use CommandHandlerNotFoundException;
 use App\Application\Command\CommandInterface;
@@ -11,7 +11,16 @@ final class CommandBus
     private array $handlers;
 
     public function __construct(array $handlers) {
-        $this->handlers = $handlers;
+        foreach($handlers as $key => $rewindable) {
+            foreach($rewindable as $handler) {
+                $this->handlers[$this->getHandlerKey(get_class($handler))] = get_class($handler);
+                unset($key);
+            }
+        }
+    }
+
+    private function getHandlerKey(string $handler) {
+        return str_replace('CommandHandler', 'Command', $handler);
     }
 
     public function getCommandHandler(string $command): object

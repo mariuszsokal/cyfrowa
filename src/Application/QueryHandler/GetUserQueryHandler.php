@@ -19,8 +19,10 @@ final class GetUserQueryHandler implements QueryHandlerInterface
         $userId = $query->getUserId();
         $user = $this->entityManager->getRepository(User::class)->find($userId);
         if(!$user) {
-            //error
+            throw new \Exception('User not found');
         }
+
+        dump('in handler');
 
         // user data
     }
