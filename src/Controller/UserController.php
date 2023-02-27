@@ -13,6 +13,9 @@ use App\Bus\CommandBus;
 use App\Application\Query\GetUserQuery;
 use App\Application\Command\ActivateUserCommand;
 use App\Application\Command\DeactivateUserCommand;
+use App\Application\Command\CreateUserCommand;
+use App\Application\Command\UpdateUserCommand;
+use App\Application\Command\DeleteUserCommand;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
@@ -56,6 +59,8 @@ class UserController extends AbstractController
      */
     public function create(Request $request): JsonResponse
     {
+        //$this->commandBus->handle(new CreateUserCommand());
+
         return new JsonResponse([]);
     }
 
@@ -74,6 +79,8 @@ class UserController extends AbstractController
      */
     public function update(int $userId): JsonResponse
     {
+        
+        //$this->commandBus->handle(new UpdateUserCommand());
         return new JsonResponse([]);
     }
 
@@ -82,6 +89,8 @@ class UserController extends AbstractController
      */
     public function delete(int $userId): JsonResponse
     {
+        $this->commandBus->handle(new DeleteUserCommand($userId));
+
         return new JsonResponse([]);
     }
 }
