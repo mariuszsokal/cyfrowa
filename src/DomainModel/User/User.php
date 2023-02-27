@@ -37,4 +37,57 @@ final class User
      * @ORM\Column(type="string", length=16)
      */
     private $vatId;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getUserName(): string
+    {
+        return $this->userName;
+    }
+
+    public function setUserName(string $userName): self
+    {
+        $this->userName = $userName;
+
+        return $this;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCompanyName(): string
+    {
+        return $this->companyName;
+    }
+
+    public function setCompanyName(string $companyName): self
+    {
+        $this->companyName = $companyName;
+
+        return $this;
+    }
+
+    public function getVatId(): string
+    {
+        return $this->vatId;
+    }
+
+    public function setVatId(string $vatId): self
+    {
+        $this->vatId = $vatId;
+        
+        return $this;
+    }
 }
