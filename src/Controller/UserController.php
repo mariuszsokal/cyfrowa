@@ -60,7 +60,6 @@ class UserController extends AbstractController
     {
         $this->queryBus->handle(new GetUserQuery($userId));
 
-        dump('after query handle');
         return new JsonResponse([]);
     }
 

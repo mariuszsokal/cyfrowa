@@ -9,14 +9,17 @@ use App\Application\Query\QueryInterface;
 final class QueryBus
 {
     private array $handlers;
+    private $container;
 
-    public function __construct(array $handlers) {
+    public function __construct(array $handlers, $container) {
         foreach($handlers as $key => $rewindable) {
             foreach($rewindable as $handler) {
                 $this->handlers[$this->getHandlerKey(get_class($handler))] = get_class($handler);
                 unset($key);
             }
         }
+        reset($container);
+        $this->container = $container[key($container)];
     }
 
     private function getHandlerKey(string $handler) {
@@ -34,9 +37,7 @@ final class QueryBus
 
     public function handle(QueryInterface $query) {
         $handlerClass = $this->getQueryHandler(get_class($query));
-        $handler = (new $handlerClass())($query);
-        
-        dump($handler);
-        //invoke handler class
+        $service = $this->container->get($handlerClass);
+        return $service($query);
     }
 }

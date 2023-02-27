@@ -25,17 +25,20 @@ services:
 
     _instanceof:
         App\Application\CommandHandler\CommandHandlerInterface:
+            public: true
             autowire: true
             tags: ['app.bus.command_handler']
         App\Application\QueryHandler\QueryHandlerInterface:
+            public: true
             autowire: true
             tags: ['app.bus.query_handler']
-        
 
     'App\Bus\CommandBus':
         arguments:
             - $handlers: !tagged 'app.bus.command_handler'
+            - $container: '@service_container'
 
     'App\Bus\QueryBus':
         arguments:
             - $handlers: !tagged 'app.bus.query_handler'
+            - $container: '@service_container'

@@ -9,14 +9,17 @@ use App\Application\Command\CommandInterface;
 final class CommandBus
 {
     private array $handlers;
+    private $container;
 
-    public function __construct(array $handlers) {
+    public function __construct(array $handlers, $container) {
         foreach($handlers as $key => $rewindable) {
             foreach($rewindable as $handler) {
                 $this->handlers[$this->getHandlerKey(get_class($handler))] = get_class($handler);
                 unset($key);
             }
         }
+        reset($container);
+        $this->container = $container[key($container)];
     }
 
     private function getHandlerKey(string $handler) {
@@ -34,8 +37,7 @@ final class CommandBus
 
     public function handle(CommandInterface $command) {
         $handlerClass = $this->getCommandHandler(get_class($command));
-        $handler = (new $handlerClass($command))();
-
-        //invoke handler class
+        $service = $this->container->get($handlerClass);
+        return $service($query);
     }
 }
