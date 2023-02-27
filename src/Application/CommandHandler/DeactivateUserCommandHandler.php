@@ -6,6 +6,7 @@ namespace App\Application\CommandHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Application\CommandHandler\CommandHandlerInterface;
+use App\Application\Command\DeactivateUserCommand;
 
 final class DeactivateUserCommandHandler implements CommandHandlerInterface
 {
@@ -15,7 +16,7 @@ final class DeactivateUserCommandHandler implements CommandHandlerInterface
         $this->entityManager = $entityManager;
     }
 
-    public function __invoke(ActivateUserCommand $command) {
+    public function __invoke(DeactivateUserCommand $command) {
         $userId = $command->getUserId();
         $user = $this->entityManager->getRepository(User::class)->find($userId);
         if(!$user) {

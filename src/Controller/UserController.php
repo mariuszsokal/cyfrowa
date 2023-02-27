@@ -86,7 +86,14 @@ class UserController extends AbstractController
     {
         $user = $this->queryBus->handle(new GetUserQuery($userId));
 
-        return new JsonResponse(json_encode($user));
+        return new JsonResponse([
+            'id' => $user->getId(),
+            'userName' => $user->getUserName(),
+            'email' => $user->getEmail(),
+            'companyName' => $user->getCompanyName(),
+            'vatId' => $user->getVatId(),
+            'active' => $user->isActive()
+        ]);
     }
 
     /**

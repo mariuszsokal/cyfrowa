@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Application\CommandHandler;
 
 use App\Application\CommandHandler\CommandHandlerInterface;
+use App\Application\Command\ActivateUserCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 
