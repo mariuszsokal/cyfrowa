@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
-final class CreateUserCommand
+use App\Application\Command\CommandInterface;
+
+final class CreateUserCommand implements CommandInterface
 {
     private string $userName;
     private string $email;

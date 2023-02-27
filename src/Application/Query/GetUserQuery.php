@@ -1,9 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Application\Command;
+namespace App\Application\Query;
 
-final class GetUserCommand
+use App\Application\Query\QueryInterface;
+
+final class GetUserQuery implements QueryInterface
 {
     private int $userId;
 

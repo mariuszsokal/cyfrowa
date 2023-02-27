@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
-final class DeleteUserCommand
+use App\Application\Command\CommandInterface;
+
+final class DeleteUserCommand implements CommandInterface
 {
     private int $userId;
 

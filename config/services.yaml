@@ -20,5 +20,23 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    _instanceof:
+        App\Application\CommandHandler\CommandHandlerInterface:
+            #autowire: true
+            tags: ['app.bus.command_handler']
+        App\Application\QueryHandler\QueryHandlerInterface:
+            #autowire: true
+            tags: ['app.bus.query_handler']
+        
+
+    'App\Bus\CommandBus':
+        arguments:
+            - !tagged 'app.bus.command_handler'
+
+    'App\Bus\QueryBus':
+        arguments:
+            - !tagged 'app.bus.query_handler'
+        
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

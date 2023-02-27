@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Application\Handler;
+namespace App\Application\CommandHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
+use App\Application\CommandHandler\CommandHandlerInterface;
 
-final class DeactivateUserCommandHandler
+final class DeactivateUserCommandHandler implements CommandHandlerInterface
 {
     private EntityManagerInterface $entityManager;
 
@@ -18,7 +19,11 @@ final class DeactivateUserCommandHandler
         $userId = $command->getUserId();
         $user = $this->entityManager->getRepository(User::class)->find($userId);
         if(!$user) {
-            //error
+            throw new \Exception('User not found');
+        }
+
+        if(!$user->isActive()) {
+            throw new \Exception('User is already not active');
         }
 
         $user->setActive(false);

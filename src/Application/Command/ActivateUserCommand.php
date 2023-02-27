@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
-final class ActivateUserCommand
+use App\Application\Command\CommandInterface;
+
+final class ActivateUserCommand implements CommandInterface
 {
     private int $userId;
 

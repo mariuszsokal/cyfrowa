@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
-final class UpdateUserCommand
+use App\Application\Command\CommandInterface;
+
+final class UpdateUserCommand implements CommandInterface
 {
     private int $userId;
     private ?string $userName;

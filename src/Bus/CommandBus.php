@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Application\CommandHandler;
+namespace App\Application\Bus;
 
 use CommandHandlerNotFoundException;
+use App\Application\Command\CommandInterface;
 
-final class CommandHandler
+final class CommandBus
 {
     private array $handlers;
 
@@ -20,5 +21,12 @@ final class CommandHandler
         }
         
         throw new CommandHandlerNotFoundException();
+    }
+
+    public function handle(CommandInterface $command) {
+        $handlerClass = $this->getCommandHandler(get_class($command));
+        $handler = (new $handlerClass($command))();
+
+        //invoke handler class
     }
 }

@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Application\Validator;
+namespace App\Application\CommandHandler;
 
+use App\Application\CommandHandler\CommandHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 
-final class ActivateUserCommandHandlerValidator
+final class ActivateUserCommandHandler implements CommandHandlerInterface
 {
     private EntityManagerInterface $entityManager;
 
@@ -18,11 +19,14 @@ final class ActivateUserCommandHandlerValidator
         $userId = $command->getUserId();
         $user = $this->entityManager->getRepository(User::class)->find($userId);
         if(!$user) {
-            //error
+            throw new \Exception('User not found');
         }
 
         if($user->isActive()) {
-            //error
+            throw new \Exception('User is already active');
         }
+
+        $user->setActive(true);
+        $this->entityManager->flush();
     }
 }

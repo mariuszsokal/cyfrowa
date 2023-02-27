@@ -8,14 +8,24 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
+use App\Bus\QueryBus;
+use App\Bus\CommandBus;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
+    private QueryBus $queryBus;
+    private CommandBus $commandBus;
 
-    public function __construct(EntityManagerInterface $entityManager) {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        QueryBus $queryBus,
+        CommandBus $commandBus
+    ) {
         $this->entityManager = $entityManager;
+        $this->queryBus = $queryBus;
+        $this->commandBus = $commandBus;
     }
 
     /**
@@ -47,12 +57,10 @@ class UserController extends AbstractController
      */
     public function get(int $userId): JsonResponse
     {
-        $user = $this->entityManager->getRepository(User::class)->find($userId);
-        if(!$user) {
-            throw new NotFoundHttpException();
-        }
+        $this->queryBus->handle(new GetUserQuery($userId));
 
-        return new JsonResponse(json_decode($user));
+        dump('after query handle');
+        return new JsonResponse([]);
     }
 
     /**
