@@ -18,21 +18,25 @@ use App\Application\Command\CreateUserCommand;
 use App\Application\Command\UpdateUserCommand;
 use App\Application\Command\DeleteUserCommand;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Logger\FileLogger;
 
 class UserController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private QueryBus $queryBus;
     private CommandBus $commandBus;
+    private FileLogger $logger;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         QueryBus $queryBus,
-        CommandBus $commandBus
+        CommandBus $commandBus,
+        FileLogger $logger
     ) {
         $this->entityManager = $entityManager;
         $this->queryBus = $queryBus;
         $this->commandBus = $commandBus;
+        $this->logger = $logger;
     }
 
     /**
@@ -40,7 +44,10 @@ class UserController extends AbstractController
      */
     public function activate(int $userId): JsonResponse
     {
-        $this->commandBus->handle(new ActivateUserCommand($userId));
+        $operationId = $this->logger->init();
+        $this->logger->log(\Psr\Log\LogLevel::INFO, $operationId, 'Request app_user_active was triggered');
+
+        $this->commandBus->handle(new ActivateUserCommand($operationId, $userId));
 
         return new JsonResponse([]);
     }

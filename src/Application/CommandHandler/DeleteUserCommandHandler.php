@@ -6,6 +6,7 @@ namespace App\Application\CommandHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Application\CommandHandler\CommandHandlerInterface;
+use App\Application\Command\DeleteUserCommand;
 
 final class DeleteUserCommandHandler implements CommandHandlerInterface
 {

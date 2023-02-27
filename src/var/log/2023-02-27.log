@@ -1,0 +1,12 @@
+2023-02-27T14:22:18+00:00 [INFO]: [63fcbc9a0e4ed] Request app_user_active was triggered
+2023-02-27T14:29:29+00:00 [INFO]: [63fcbe493f6f7] Request app_user_active was triggered
+2023-02-27T14:29:29+00:00 [INFO]: [63fcbe493f6f7] CommandHandler ActivateUserCommand was triggered
+2023-02-27T14:29:29+00:00 [INFO]: [63fcbe493f6f7] UserId 2 has been activated
+2023-02-27T14:29:31+00:00 [INFO]: [63fcbe4b34fd7] Request app_user_active was triggered
+2023-02-27T14:29:31+00:00 [INFO]: [63fcbe4b34fd7] CommandHandler ActivateUserCommand was triggered
+2023-02-27T14:29:42+00:00 [INFO]: [63fcbe5663dd9] Request app_user_active was triggered
+2023-02-27T14:29:42+00:00 [INFO]: [63fcbe5663dd9] CommandHandler ActivateUserCommand was triggered
+2023-02-27T14:29:42+00:00 [WARNING]: [63fcbe5663dd9] UserId 2 is already active
+2023-02-27T14:30:05+00:00 [INFO]: [63fcbe6df22a5] Request app_user_active was triggered
+2023-02-27T14:30:05+00:00 [INFO]: [63fcbe6df22a5] CommandHandler ActivateUserCommand was triggered
+2023-02-27T14:30:06+00:00 [WARNING]: [63fcbe6df22a5] UserId 2 is already active
